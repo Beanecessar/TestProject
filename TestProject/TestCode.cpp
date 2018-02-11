@@ -4,7 +4,7 @@
 #include <Windows.h>
 
 int main(int argc, char* args[]) {
-	SDL_Joystick *stick = NULL;
+	SDL_GameController *controller = NULL;
 	SDL_Event event;
 
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -12,12 +12,16 @@ int main(int argc, char* args[]) {
 	if (SDL_NumJoysticks() >= 1)
 	{
 		std::cout << "Controller connected." << std::endl;
-		stick = SDL_JoystickOpen(0);
+		controller = SDL_GameControllerOpen(0);
+		std::cout << SDL_GameControllerName(controller) << std::endl;
+		//system("pause");
 	}
 
 	int x = 0, y = 0;
+
 	while (true)
 	{
+
 		while (SDL_PollEvent(&event))
 		{
 			/*if (event.type == SDL_JOYAXISMOTION)
@@ -31,11 +35,13 @@ int main(int argc, char* args[]) {
 					y = event.jaxis.value;
 				}
 			}*/
-			if (event.type == SDL_JOYBUTTONDOWN)
+			if (event.type == SDL_CONTROLLERBUTTONDOWN)
+			{
 				/*std::cout << event.jbutton.button << std::endl;*/
-				x = event.jbutton.button;
-			system("cls");
-			std::cout << "x:" << x;
+				x = event.cbutton.button;
+				//system("cls");
+				std::cout << "x:" << x << std::endl;
+			}
 		}
 	}
 	
